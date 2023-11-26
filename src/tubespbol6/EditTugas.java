@@ -8,15 +8,66 @@ package tubespbol6;
  *
  * @author User
  */
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 public class EditTugas extends javax.swing.JFrame {
 
     /**
      * Creates new form EditTugas
      */
+    public Statement st;
+    public ResultSet rs;
+    Connection cn = Koneksi.Koneksi();
+    
+    private String namaTugas;
+
     public EditTugas() {
         initComponents();
     }
+    
+    public EditTugas(String namaTugas) {
+    this.namaTugas = namaTugas;
+    initComponents();
+    TampilData();
 
+    }
+
+    private void TampilData(){
+        try {
+        String sql = "SELECT * FROM penjadwalan WHERE nama_tugas = '" + namaTugas + "' ";
+        
+        st = cn.createStatement();
+        rs = st.executeQuery(sql);
+
+        // Pastikan bahwa rs.next() benar-benar ada data sebelum mencoba mengambil nilainya
+        if (rs.next()) {
+            // Ambil nilai dari hasil query
+            String tugas = rs.getString("nama_tugas");
+            String deskripsi = rs.getString("deskripsi");
+            String dueDate = rs.getString("due_date");
+            
+            Date tenggat = rs.getTimestamp("due_date");
+
+            // Setel nilai-nilai tersebut pada label-label
+            txtTugas.setText(tugas);
+            txtDeskripsi.setText(deskripsi);
+            txtTenggat.setDate(tenggat);
+        } else {
+            // Tidak ada data yang cocok dengan kriteria, mungkin tampilkan pesan atau lakukan sesuatu yang sesuai
+            System.out.println("Tidak ada data dengan nama tugas '" + namaTugas + "'");
+        }
+    } catch (SQLException e) {
+            // Handle exception (e.g., tampilkan pesan kesalahan atau log)
+            
+    }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,12 +84,15 @@ public class EditTugas extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        btnSimpan = new javax.swing.JButton();
+        txtTugas = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jButton2 = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        txtDeskripsi = new javax.swing.JTextArea();
+        btnKembali = new javax.swing.JButton();
+        lblNamaTugas = new javax.swing.JLabel();
+        lblNamaTugas1 = new javax.swing.JLabel();
+        lblNamaTugas2 = new javax.swing.JLabel();
+        txtTenggat = new com.toedter.calendar.JDateChooser();
 
         jLabel3.setFont(new java.awt.Font("Raleway ExtraBold", 0, 14)); // NOI18N
         jLabel3.setText("PETUGAS");
@@ -96,35 +150,44 @@ public class EditTugas extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton1.setBackground(new java.awt.Color(116, 142, 99));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Simpan");
-        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        jTextField2.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
-        jTextField2.setText("nama_tuggas");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        btnSimpan.setBackground(new java.awt.Color(116, 142, 99));
+        btnSimpan.setForeground(new java.awt.Color(255, 255, 255));
+        btnSimpan.setText("Simpan");
+        btnSimpan.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                btnSimpanActionPerformed(evt);
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
-        jTextArea1.setRows(5);
-        jTextArea1.setText("deskripsi_tugas");
-        jScrollPane1.setViewportView(jTextArea1);
-
-        jButton2.setText("Kembali");
-        jButton2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        txtTugas.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtTugas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                txtTugasActionPerformed(evt);
             }
         });
 
-        jTextField3.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
-        jTextField3.setText("Tenggat");
+        txtDeskripsi.setColumns(20);
+        txtDeskripsi.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        txtDeskripsi.setRows(5);
+        txtDeskripsi.setText("deskripsi_tugas");
+        jScrollPane1.setViewportView(txtDeskripsi);
+
+        btnKembali.setText("Kembali");
+        btnKembali.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnKembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKembaliActionPerformed(evt);
+            }
+        });
+
+        lblNamaTugas.setText("Nama Tugas");
+
+        lblNamaTugas1.setText("Deskripsi");
+
+        lblNamaTugas2.setText("Tenggat");
+
+        txtTenggat.setDateFormatString(" yyyy-MM-dd h:mm:ss");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -135,29 +198,41 @@ public class EditTugas extends javax.swing.JFrame {
                 .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jTextField2)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblNamaTugas)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtTugas)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE))
+                        .addComponent(lblNamaTugas1)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(lblNamaTugas2)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtTenggat, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(25, 25, 25)
+                .addComponent(lblNamaTugas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtTugas, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addComponent(lblNamaTugas1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNamaTugas2)
+                    .addComponent(txtTenggat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29))
         );
 
@@ -175,14 +250,39 @@ public class EditTugas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtTugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTugasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtTugasActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        this.setVisible(false);
-        new DeskripsiTugas().setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
+        DeskripsiTugas desc = new DeskripsiTugas(txtTugas.getText());
+            
+            desc.setVisible(true);
+            
+            this.setVisible(false);
+    }//GEN-LAST:event_btnKembaliActionPerformed
+
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+        // TODO add your handling code here:
+         try {
+            // aksi simpan data
+            if (btnSimpan.getText() == "Simpan"){
+                    
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd h:mm:ss"); // Sesuaikan dengan format tanggal di database
+                String formattedDate = sdf.format(txtTenggat.getDate());
+                
+                String sql = "UPDATE penjadwalan SET nama_tugas = '" + txtTugas.getText() + "', deskripsi = '" + txtDeskripsi.getText() + "', due_date = '" + formattedDate + "' WHERE nama_tugas = '" + namaTugas + "'";
+                st.executeUpdate(sql);
+                JOptionPane.showMessageDialog(null, "Data berhasil diubah");
+                
+                this.setVisible(false);
+                new Dashboard().setVisible(true);
+                
+            } 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnSimpanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,8 +320,8 @@ public class EditTugas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnKembali;
+    private javax.swing.JButton btnSimpan;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -229,9 +329,12 @@ public class EditTugas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JLabel lblNamaTugas;
+    private javax.swing.JLabel lblNamaTugas1;
+    private javax.swing.JLabel lblNamaTugas2;
+    private javax.swing.JTextArea txtDeskripsi;
+    private com.toedter.calendar.JDateChooser txtTenggat;
+    private javax.swing.JTextField txtTugas;
     // End of variables declaration//GEN-END:variables
 }

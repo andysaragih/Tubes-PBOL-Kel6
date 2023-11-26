@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class Dashboard extends javax.swing.JFrame {
+public class TugasSelesai extends javax.swing.JFrame {
 
     /**
      * Creates new form Dashboard
@@ -23,20 +23,21 @@ public class Dashboard extends javax.swing.JFrame {
     public ResultSet rs;
     Connection cn = Koneksi.Koneksi();
     
-    public Dashboard() {
+    public TugasSelesai() {
         initComponents();
         TampilData();
     }
     
     private void TampilData(){
         try {
-            String $sql = "SELECT * FROM penjadwalan WHERE selesai = 0";
+            String $sql = "SELECT * FROM penjadwalan WHERE selesai = 1";
             
             st = cn.createStatement();
             rs = st.executeQuery($sql);
             
             DefaultTableModel model = new DefaultTableModel();
             model.addColumn("Tugas");
+            model.addColumn("Deskripsi");
             model.addColumn("Date Added");
             model.addColumn("Due Date");
 
@@ -47,6 +48,7 @@ public class Dashboard extends javax.swing.JFrame {
             while (rs.next()) {
                 Object[] data = {
                   rs.getString("nama_tugas"),
+                  rs.getString("deskripsi"),
                   rs.getString("date_added"),
                   rs.getString("due_date")
                 };
@@ -74,10 +76,9 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        btnTugasSelesai = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblData = new javax.swing.JTable();
-        btnTambah = new javax.swing.JButton();
+        btnTugasSelesai = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Poppins", 1, 14)); // NOI18N
         jLabel1.setText("PETUGAS");
@@ -99,7 +100,7 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(jLabel2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(552, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,17 +113,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(153, 176, 128));
 
         jLabel3.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
-        jLabel3.setText("!  Jumlah tugas yang belum selesai : xx");
-
-        btnTugasSelesai.setBackground(new java.awt.Color(153, 176, 128));
-        btnTugasSelesai.setForeground(new java.awt.Color(255, 255, 255));
-        btnTugasSelesai.setText("Tugas Yang Selesai");
-        btnTugasSelesai.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnTugasSelesai.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTugasSelesaiActionPerformed(evt);
-            }
-        });
+        jLabel3.setText("Daftar Tugas yang Sudah Selesai Dikerjakan");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -131,50 +122,41 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnTugasSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(315, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnTugasSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         tblData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null}
+                {null, null, null, null}
             },
             new String [] {
-                "Tugas", "Date Added", "Due Date"
+                "Tugas", "Deskripsi", "Date Added", "Due Date"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tblData.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblDataMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(tblData);
 
-        btnTambah.setBackground(new java.awt.Color(116, 142, 99));
-        btnTambah.setForeground(new java.awt.Color(255, 255, 255));
-        btnTambah.setText("Tambah");
-        btnTambah.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnTambah.addActionListener(new java.awt.event.ActionListener() {
+        btnTugasSelesai.setBackground(new java.awt.Color(153, 176, 128));
+        btnTugasSelesai.setForeground(new java.awt.Color(255, 255, 255));
+        btnTugasSelesai.setText("Kembali");
+        btnTugasSelesai.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnTugasSelesai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTambahActionPerformed(evt);
+                btnTugasSelesaiActionPerformed(evt);
             }
         });
 
@@ -187,7 +169,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnTugasSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -204,7 +186,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnTugasSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 26, Short.MAX_VALUE))
         );
 
@@ -222,32 +204,10 @@ public class Dashboard extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahActionPerformed
-        //action habis di klik
-        this.setVisible(false);
-        new TambahTugas().setVisible(true);
-    }//GEN-LAST:event_btnTambahActionPerformed
-
     private void btnTugasSelesaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTugasSelesaiActionPerformed
         this.setVisible(false);
-        new TugasSelesai().setVisible(true);
+        new Dashboard().setVisible(true);
     }//GEN-LAST:event_btnTugasSelesaiActionPerformed
-
-    private void tblDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDataMouseClicked
-        // TODO add your handling code here:
-        int selectedRow = tblData.getSelectedRow();
-        
-        if (selectedRow != -1) {
-            String tugas = tblData.getValueAt(selectedRow, 0).toString();
-            
-            DeskripsiTugas desc = new DeskripsiTugas(tugas);
-            
-            desc.setVisible(true);
-            
-            this.setVisible(false);
-        }
-       
-    }//GEN-LAST:event_tblDataMouseClicked
 
     /**
      * @param args the command line arguments
@@ -266,26 +226,26 @@ public class Dashboard extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TugasSelesai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TugasSelesai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TugasSelesai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Dashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TugasSelesai.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Dashboard().setVisible(true);
+                new TugasSelesai().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnTambah;
     private javax.swing.JButton btnTugasSelesai;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
