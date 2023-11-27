@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.Duration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 
@@ -83,8 +85,15 @@ public class DeskripsiTugas extends javax.swing.JFrame {
         }
     } catch (SQLException e) {
             // Handle exception (e.g., tampilkan pesan kesalahan atau log)
-            
+            JOptionPane.showMessageDialog(this, e.getMessage());
     }
+    }
+    
+    public void hideElements() {
+        btnEdit.setVisible(false);
+        btnSelesai.setVisible(false);
+        labelSisaWaktu.setVisible(false);        
+        labelSelesai.setVisible(false);
     }
 
     /**
@@ -111,7 +120,7 @@ public class DeskripsiTugas extends javax.swing.JFrame {
         txtDueDate = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        labelSelesai = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         labelSisaWaktu = new javax.swing.JLabel();
 
@@ -225,7 +234,7 @@ public class DeskripsiTugas extends javax.swing.JFrame {
 
         jLabel3.setText("Due Date");
 
-        jLabel4.setText("Apakah tugas ini sudah selesai?");
+        labelSelesai.setText("Apakah tugas ini sudah selesai?");
 
         jLabel5.setText("jLabel5");
 
@@ -248,30 +257,31 @@ public class DeskripsiTugas extends javax.swing.JFrame {
                             .addComponent(txtDateAdded, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
                             .addComponent(txtDueDate))
                         .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(labelTugas)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(labelSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
                                 .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addGap(60, 60, 60))
-                                    .addComponent(labelSisaWaktu, javax.swing.GroupLayout.Alignment.TRAILING))))
-                        .addGap(20, 20, 20))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(labelTugas)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(labelSisaWaktu)))))
+                        .addGap(20, 20, 20))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(67, 67, 67))
+                .addGap(79, 79, 79))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -300,7 +310,7 @@ public class DeskripsiTugas extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtDueDate, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(3, 3, 3)
-                .addComponent(jLabel4)
+                .addComponent(labelSelesai)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 25, Short.MAX_VALUE))
@@ -341,7 +351,7 @@ public class DeskripsiTugas extends javax.swing.JFrame {
             if (btnSelesai.getText() == "Selesai") {
                 String sql = "UPDATE penjadwalan SET selesai = 1 WHERE nama_tugas = '"+ namaTugas +"'";
                 st.executeUpdate(sql);
-                JOptionPane.showMessageDialog(null, "Tugas Selesai");
+                JOptionPane.showMessageDialog(null, "Selamat.." + namaTugas + "kamu sudah selesai");
                 
                 this.setVisible(false);
                 new TugasSelesai().setVisible(true);
@@ -354,8 +364,18 @@ public class DeskripsiTugas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSelesaiActionPerformed
 
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
-        this.setVisible(false);
-        new Dashboard().setVisible(true);
+        try {
+            if(rs.getInt("selesai") == 0){
+                this.setVisible(false);
+                new Dashboard().setVisible(true);
+            } else {
+                this.setVisible(false);
+                new TugasSelesai().setVisible(true);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+        
     }//GEN-LAST:event_btnKembaliActionPerformed
 
     private void txtDateAddedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDateAddedActionPerformed
@@ -374,14 +394,22 @@ public class DeskripsiTugas extends javax.swing.JFrame {
                 st = cn.createStatement();
                 String sql = "DELETE FROM penjadwalan WHERE nama_tugas = '" + labelTugas.getText() + "'";
                 st.executeUpdate(sql);
-                JOptionPane.showMessageDialog(null, "Tugas berhasil dihapus");
+                JOptionPane.showMessageDialog(null, namaTugas +"berhasil dihapus");
                 
-                this.setVisible(false);
-                new Dashboard().setVisible(true);
+                try {
+                    if(rs.getInt("selesai") == 0){
+                        this.setVisible(false);
+                        new Dashboard().setVisible(true);
+                    } else {
+                        this.setVisible(false);
+                        new TugasSelesai().setVisible(true);
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage());
+                }
                 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e);
-
             }
         }
     }//GEN-LAST:event_btnHapusActionPerformed
@@ -429,12 +457,12 @@ public class DeskripsiTugas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelSelesai;
     private javax.swing.JLabel labelSisaWaktu;
     private javax.swing.JLabel labelTugas;
     private javax.swing.JTextField txtDateAdded;

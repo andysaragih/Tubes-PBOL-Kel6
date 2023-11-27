@@ -65,6 +65,7 @@ public class EditTugas extends javax.swing.JFrame {
         }
     } catch (SQLException e) {
             // Handle exception (e.g., tampilkan pesan kesalahan atau log)
+            JOptionPane.showMessageDialog(this, e.getMessage());
             
     }
     }
@@ -210,7 +211,7 @@ public class EditTugas extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addComponent(lblNamaTugas2)
                             .addGap(18, 18, 18)
-                            .addComponent(txtTenggat, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtTenggat, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -273,14 +274,14 @@ public class EditTugas extends javax.swing.JFrame {
                 
                 String sql = "UPDATE penjadwalan SET nama_tugas = '" + txtTugas.getText() + "', deskripsi = '" + txtDeskripsi.getText() + "', due_date = '" + formattedDate + "' WHERE nama_tugas = '" + namaTugas + "'";
                 st.executeUpdate(sql);
-                JOptionPane.showMessageDialog(null, "Data berhasil diubah");
+                JOptionPane.showMessageDialog(null, "Tugas berhasil diubah");
                 
                 this.setVisible(false);
                 new Dashboard().setVisible(true);
                 
             } 
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_btnSimpanActionPerformed
 

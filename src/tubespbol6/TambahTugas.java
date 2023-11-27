@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class TambahTugas extends javax.swing.JFrame {
 
@@ -33,7 +34,7 @@ public class TambahTugas extends javax.swing.JFrame {
         txtDeskripsi.setText("");
         txtTenggat.setDate(null);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -173,7 +174,7 @@ public class TambahTugas extends javax.swing.JFrame {
                                     .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txtTenggat, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(txtTenggat, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -234,29 +235,39 @@ public class TambahTugas extends javax.swing.JFrame {
             }
             
             // aksi simpan data
-            if (btnTambah.getText() == "Tambah") {
-                String cek = "SELECT * FROM penjadwalan WHERE nama_tugas = '" + txtNama.getText() + "'";
-                rs = st.executeQuery(cek);
-                
-                if(rs.next()) {
-                    JOptionPane.showMessageDialog(null, "Tugas sudah ada");
-                }
-                else {
-                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd h:mm:ss"); // Sesuaikan dengan format tanggal di database
-                String formattedDate = sdf.format(txtTenggat.getDate());
+            if ("Tambah".equals(btnTambah.getText())) {
+    try {
+        String cek = "SELECT * FROM penjadwalan WHERE nama_tugas = '" + txtNama.getText() + "'";
+        rs = st.executeQuery(cek);
+
         
+        if (rs.next()) {
+            JOptionPane.showMessageDialog(null, "Tugas dengan nama tersebut sudah ada. Pilih nama yang lain.");
+        } else {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd h:mm:ss");
+            String formattedDate = sdf.format(txtTenggat.getDate());
+
+            Date currentDate = new Date();
+            String formattedCurrentDate = sdf.format(currentDate);
+
+            if (formattedDate.compareTo(formattedCurrentDate) < 0) {
+                JOptionPane.showMessageDialog(null, "Tanggal tenggat harus setelah tanggal hari ini.");
+            } else {
                 String sql = "INSERT INTO penjadwalan (nama_tugas, deskripsi, due_date) VALUES ('" + txtNama.getText() + "','" + txtDeskripsi.getText() + "','" + formattedDate + "')";
                 st.executeUpdate(sql);
-                JOptionPane.showMessageDialog(null, "Data berhasil ditambahkan");
+                JOptionPane.showMessageDialog(null, "Tugas kamu berhasil ditambahkan");
                 Bersih();
-                
+
                 this.setVisible(false);
                 new Dashboard().setVisible(true);
-                }
-                
-            } 
+            }
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, e.getMessage());
+    }
+}
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_btnTambahActionPerformed
 

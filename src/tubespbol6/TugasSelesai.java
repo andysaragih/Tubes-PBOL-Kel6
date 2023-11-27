@@ -58,6 +58,7 @@ public class TugasSelesai extends javax.swing.JFrame {
             
             
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
@@ -148,6 +149,11 @@ public class TugasSelesai extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblData.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDataMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblData);
 
         btnTugasSelesai.setBackground(new java.awt.Color(153, 176, 128));
@@ -208,6 +214,22 @@ public class TugasSelesai extends javax.swing.JFrame {
         this.setVisible(false);
         new Dashboard().setVisible(true);
     }//GEN-LAST:event_btnTugasSelesaiActionPerformed
+
+    private void tblDataMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDataMouseClicked
+        int selectedRow = tblData.getSelectedRow();
+        
+        if (selectedRow != -1) {
+            String tugas = tblData.getValueAt(selectedRow, 0).toString();
+            
+            DeskripsiTugas desc = new DeskripsiTugas(tugas);
+            
+            desc.hideElements();
+            
+            desc.setVisible(true);
+            
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_tblDataMouseClicked
 
     /**
      * @param args the command line arguments

@@ -26,6 +26,7 @@ public class Dashboard extends javax.swing.JFrame {
     public Dashboard() {
         initComponents();
         TampilData();
+        TampilJumlah();
     }
     
     private void TampilData(){
@@ -43,7 +44,7 @@ public class Dashboard extends javax.swing.JFrame {
             model.getDataVector().removeAllElements();
             model.fireTableDataChanged();
             model.setRowCount(0);
-            
+                        
             while (rs.next()) {
                 Object[] data = {
                   rs.getString("nama_tugas"),
@@ -52,10 +53,27 @@ public class Dashboard extends javax.swing.JFrame {
                 };
                 model.addRow(data);
                 tblData.setModel(model);
-            }
-            
+            }            
             
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    private void TampilJumlah(){
+        try {
+            String $sql = "SELECT COUNT(nama_tugas) AS jumlah FROM penjadwalan WHERE selesai = 0";
+            
+            st = cn.createStatement();
+            rs = st.executeQuery($sql);
+            
+            if(rs.next()){
+               int jumlah = rs.getInt("jumlah");
+               
+               labelJumlah.setText("! Jumlah tugas yang belum selesai : " + jumlah);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
 
@@ -73,7 +91,7 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        labelJumlah = new javax.swing.JLabel();
         btnTugasSelesai = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblData = new javax.swing.JTable();
@@ -111,8 +129,8 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(153, 176, 128));
 
-        jLabel3.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
-        jLabel3.setText("!  Jumlah tugas yang belum selesai : xx");
+        labelJumlah.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        labelJumlah.setText("!  Jumlah tugas yang belum selesai : xx");
 
         btnTugasSelesai.setBackground(new java.awt.Color(153, 176, 128));
         btnTugasSelesai.setForeground(new java.awt.Color(255, 255, 255));
@@ -130,7 +148,7 @@ public class Dashboard extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
+                .addComponent(labelJumlah)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnTugasSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -140,7 +158,7 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(labelJumlah, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnTugasSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -289,11 +307,11 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton btnTugasSelesai;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelJumlah;
     private javax.swing.JTable tblData;
     // End of variables declaration//GEN-END:variables
 }

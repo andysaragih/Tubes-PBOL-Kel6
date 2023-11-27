@@ -117,7 +117,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lblNamaTugas2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="txtTenggat" min="-2" pref="150" max="-2" attributes="0"/>
+                              <Component id="txtTenggat" min="-2" pref="180" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
