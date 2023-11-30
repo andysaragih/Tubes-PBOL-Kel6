@@ -4,6 +4,8 @@
  */
 package tubespbol6;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,13 +36,26 @@ public class DeskripsiTugas extends javax.swing.JFrame {
     public DeskripsiTugas() {
         initComponents();
         TampilData();
+        
+        Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
+        
+        //membuat titik x dan y untuk lokasi window
+        int x = layar.width /2 - this.getSize().width / 2;
+        int y = layar.height /2 - this.getSize().height / 2;
+        this.setLocation(x, y);
     }
     
     public DeskripsiTugas(String namaTugas) {
         this.namaTugas = namaTugas;
         initComponents();
         TampilData();
-
+        
+        Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
+        
+        //membuat titik x dan y untuk lokasi window
+        int x = layar.width /2 - this.getSize().width / 2;
+        int y = layar.height /2 - this.getSize().height / 2;
+        this.setLocation(x, y);
         
         
 //        labelTugas.setText(namaTugas);
@@ -139,6 +154,7 @@ public class DeskripsiTugas extends javax.swing.JFrame {
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(249, 181, 114));
+        jPanel1.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
 
         jPanel3.setBackground(new java.awt.Color(116, 142, 99));
 
@@ -146,6 +162,7 @@ public class DeskripsiTugas extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("TASUKU");
 
+        btnKembali.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         btnKembali.setText("Kembali");
         btnKembali.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnKembali.addActionListener(new java.awt.event.ActionListener() {
@@ -230,14 +247,18 @@ public class DeskripsiTugas extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jLabel2.setText("Date Added");
 
+        jLabel3.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         jLabel3.setText("Due Date");
 
+        labelSelesai.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         labelSelesai.setText("Apakah tugas ini sudah selesai?");
 
         jLabel5.setText("jLabel5");
 
+        labelSisaWaktu.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         labelSisaWaktu.setText("Sisa Waktu");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -313,7 +334,7 @@ public class DeskripsiTugas extends javax.swing.JFrame {
                 .addComponent(labelSelesai)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 25, Short.MAX_VALUE))
+                .addGap(0, 26, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

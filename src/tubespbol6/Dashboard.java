@@ -8,9 +8,13 @@ package tubespbol6;
  *
  * @author User
  */
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,11 +31,18 @@ public class Dashboard extends javax.swing.JFrame {
         initComponents();
         TampilData();
         TampilJumlah();
+        
+        Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
+        
+        //membuat titik x dan y untuk lokasi window
+        int x = layar.width /2 - this.getSize().width / 2;
+        int y = layar.height /2 - this.getSize().height / 2;
+        this.setLocation(x, y);
     }
     
     private void TampilData(){
         try {
-            String $sql = "SELECT * FROM penjadwalan WHERE selesai = 0";
+            String $sql = "SELECT * FROM penjadwalan WHERE selesai = 0 ORDER BY due_date";
             
             st = cn.createStatement();
             rs = st.executeQuery($sql);
@@ -129,10 +140,11 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(153, 176, 128));
 
-        labelJumlah.setFont(new java.awt.Font("Montserrat", 1, 12)); // NOI18N
+        labelJumlah.setFont(new java.awt.Font("Montserrat SemiBold", 0, 12)); // NOI18N
         labelJumlah.setText("!  Jumlah tugas yang belum selesai : xx");
 
-        btnTugasSelesai.setBackground(new java.awt.Color(153, 176, 128));
+        btnTugasSelesai.setBackground(new java.awt.Color(116, 142, 99));
+        btnTugasSelesai.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         btnTugasSelesai.setForeground(new java.awt.Color(255, 255, 255));
         btnTugasSelesai.setText("Tugas Yang Selesai");
         btnTugasSelesai.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -150,7 +162,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(labelJumlah)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnTugasSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnTugasSelesai, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -163,6 +175,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        tblData.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         tblData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null}
@@ -187,6 +200,7 @@ public class Dashboard extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblData);
 
         btnTambah.setBackground(new java.awt.Color(116, 142, 99));
+        btnTambah.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         btnTambah.setForeground(new java.awt.Color(255, 255, 255));
         btnTambah.setText("Tambah");
         btnTambah.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));

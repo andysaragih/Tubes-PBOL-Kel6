@@ -4,6 +4,9 @@
  */
 package tubespbol6;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 /**
  *
  * @author ASUS
@@ -15,6 +18,12 @@ public class Mulai extends javax.swing.JFrame {
      */
     public Mulai() {
         initComponents();
+        Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
+        
+        //membuat titik x dan y untuk lokasi window
+        int x = layar.width /2 - this.getSize().width / 2;
+        int y = layar.height /2 - this.getSize().height / 2;
+        this.setLocation(x, y);
     }
 
     /**
@@ -38,19 +47,22 @@ public class Mulai extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(249, 181, 114));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 100)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Montserrat ExtraBold", 0, 70)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("TASUKU");
         jLabel1.setMaximumSize(new java.awt.Dimension(100, 16));
         jLabel1.setMinimumSize(new java.awt.Dimension(100, 16));
         jLabel1.setPreferredSize(new java.awt.Dimension(100, 16));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Montserrat", 0, 20)); // NOI18N
         jLabel3.setText("Jadwalkan, Kerjakan, Raih Impian!");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Montserrat", 0, 18)); // NOI18N
         jLabel4.setText("Kelompok 6 Proudly Present");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        jButton1.setBackground(new java.awt.Color(116, 142, 99));
+        jButton1.setFont(new java.awt.Font("Montserrat", 0, 20)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Mulai");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,36 +78,38 @@ public class Mulai extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(172, 172, 172)
-                        .addComponent(jLabel2))
+                        .addComponent(jLabel2)
+                        .addGap(68, 68, 68)
+                        .addComponent(jButton1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(94, 94, 94)
+                        .addGap(92, 92, 92)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(63, 63, 63)
+                                .addGap(52, 52, 52)
                                 .addComponent(jLabel4))
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(39, 39, 39)
+                                .addGap(28, 28, 28)
                                 .addComponent(jLabel3))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(136, 136, 136)
-                                .addComponent(jButton1)))))
-                .addContainerGap(115, Short.MAX_VALUE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(73, 73, 73)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addContainerGap(74, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(jButton1)))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

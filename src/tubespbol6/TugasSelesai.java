@@ -8,6 +8,8 @@ package tubespbol6;
  *
  * @author User
  */
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
@@ -26,6 +28,13 @@ public class TugasSelesai extends javax.swing.JFrame {
     public TugasSelesai() {
         initComponents();
         TampilData();
+        
+        Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
+        
+        //membuat titik x dan y untuk lokasi window
+        int x = layar.width /2 - this.getSize().width / 2;
+        int y = layar.height /2 - this.getSize().height / 2;
+        this.setLocation(x, y);
     }
     
     private void TampilData(){
@@ -87,6 +96,7 @@ public class TugasSelesai extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel3.setBackground(new java.awt.Color(249, 181, 114));
+        jPanel3.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
 
         jPanel1.setBackground(new java.awt.Color(116, 142, 99));
 
@@ -133,6 +143,7 @@ public class TugasSelesai extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        tblData.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         tblData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
@@ -157,6 +168,7 @@ public class TugasSelesai extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblData);
 
         btnTugasSelesai.setBackground(new java.awt.Color(153, 176, 128));
+        btnTugasSelesai.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         btnTugasSelesai.setForeground(new java.awt.Color(255, 255, 255));
         btnTugasSelesai.setText("Kembali");
         btnTugasSelesai.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));

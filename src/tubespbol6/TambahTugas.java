@@ -8,6 +8,8 @@ package tubespbol6;
  *
  * @author User
  */
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -27,6 +29,13 @@ public class TambahTugas extends javax.swing.JFrame {
     
     public TambahTugas() {
         initComponents();
+        
+        Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
+        
+        //membuat titik x dan y untuk lokasi window
+        int x = layar.width /2 - this.getSize().width / 2;
+        int y = layar.height /2 - this.getSize().height / 2;
+        this.setLocation(x, y);
     }
     
     private void Bersih(){
@@ -143,13 +152,15 @@ public class TambahTugas extends javax.swing.JFrame {
             }
         });
 
+        lblDeskripsi.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         lblDeskripsi.setText("Deskripsi");
 
+        lblNamaTugas.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         lblNamaTugas.setText("Nama Tugas");
 
         lblTenggat.setText("Tenggat");
 
-        txtTenggat.setDateFormatString(" yyyy-MM-dd h:mm:ss");
+        txtTenggat.setDateFormatString(" yyyy-MM-dd HH:mm:ss");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -197,7 +208,7 @@ public class TambahTugas extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTambah, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(83, Short.MAX_VALUE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -244,7 +255,7 @@ public class TambahTugas extends javax.swing.JFrame {
         if (rs.next()) {
             JOptionPane.showMessageDialog(null, "Tugas dengan nama tersebut sudah ada. Pilih nama yang lain.");
         } else {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd h:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String formattedDate = sdf.format(txtTenggat.getDate());
 
             Date currentDate = new Date();

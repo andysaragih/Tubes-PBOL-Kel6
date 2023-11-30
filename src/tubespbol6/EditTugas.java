@@ -9,6 +9,8 @@ package tubespbol6;
  * @author User
  */
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,6 +32,13 @@ public class EditTugas extends javax.swing.JFrame {
 
     public EditTugas() {
         initComponents();
+        
+        Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
+        
+        //membuat titik x dan y untuk lokasi window
+        int x = layar.width /2 - this.getSize().width / 2;
+        int y = layar.height /2 - this.getSize().height / 2;
+        this.setLocation(x, y);
     }
     
     public EditTugas(String namaTugas) {
@@ -152,6 +161,7 @@ public class EditTugas extends javax.swing.JFrame {
         );
 
         btnSimpan.setBackground(new java.awt.Color(116, 142, 99));
+        btnSimpan.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         btnSimpan.setForeground(new java.awt.Color(255, 255, 255));
         btnSimpan.setText("Simpan");
         btnSimpan.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -174,6 +184,7 @@ public class EditTugas extends javax.swing.JFrame {
         txtDeskripsi.setText("deskripsi_tugas");
         jScrollPane1.setViewportView(txtDeskripsi);
 
+        btnKembali.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         btnKembali.setText("Kembali");
         btnKembali.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnKembali.addActionListener(new java.awt.event.ActionListener() {
@@ -182,10 +193,13 @@ public class EditTugas extends javax.swing.JFrame {
             }
         });
 
+        lblNamaTugas.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         lblNamaTugas.setText("Nama Tugas");
 
+        lblNamaTugas1.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         lblNamaTugas1.setText("Deskripsi");
 
+        lblNamaTugas2.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         lblNamaTugas2.setText("Tenggat");
 
         txtTenggat.setDateFormatString(" yyyy-MM-dd h:mm:ss");
@@ -222,7 +236,7 @@ public class EditTugas extends javax.swing.JFrame {
                 .addComponent(lblNamaTugas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTugas, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addComponent(lblNamaTugas1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
