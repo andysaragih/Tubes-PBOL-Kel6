@@ -13,8 +13,10 @@ import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,8 +31,8 @@ public class Dashboard extends javax.swing.JFrame {
     
     public Dashboard() {
         initComponents();
-        TampilData();
-        TampilJumlah();
+        tampilData();
+        tampilJumlah();
         
         Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
         
@@ -40,7 +42,7 @@ public class Dashboard extends javax.swing.JFrame {
         this.setLocation(x, y);
     }
     
-    private void TampilData(){
+    private void tampilData(){
         try {
             String $sql = "SELECT * FROM penjadwalan WHERE selesai = 0 ORDER BY due_date";
             
@@ -66,12 +68,14 @@ public class Dashboard extends javax.swing.JFrame {
                 tblData.setModel(model);
             }            
             
+//             
+        
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
     
-    private void TampilJumlah(){
+    private void tampilJumlah(){
         try {
             String $sql = "SELECT COUNT(nama_tugas) AS jumlah FROM penjadwalan WHERE selesai = 0";
             

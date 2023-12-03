@@ -44,11 +44,11 @@ public class EditTugas extends javax.swing.JFrame {
     public EditTugas(String namaTugas) {
     this.namaTugas = namaTugas;
     initComponents();
-    TampilData();
+    tampilData();
 
     }
 
-    private void TampilData(){
+    private void tampilData(){
         try {
         String sql = "SELECT * FROM penjadwalan WHERE nama_tugas = '" + namaTugas + "' ";
         

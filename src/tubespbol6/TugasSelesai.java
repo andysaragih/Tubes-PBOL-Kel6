@@ -27,7 +27,7 @@ public class TugasSelesai extends javax.swing.JFrame {
     
     public TugasSelesai() {
         initComponents();
-        TampilData();
+        tampilData();
         
         Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
         
@@ -37,7 +37,7 @@ public class TugasSelesai extends javax.swing.JFrame {
         this.setLocation(x, y);
     }
     
-    private void TampilData(){
+    private void tampilData(){
         try {
             String $sql = "SELECT * FROM penjadwalan WHERE selesai = 1";
             
@@ -233,11 +233,11 @@ public class TugasSelesai extends javax.swing.JFrame {
         if (selectedRow != -1) {
             String tugas = tblData.getValueAt(selectedRow, 0).toString();
             
-            DeskripsiTugas desc = new DeskripsiTugas(tugas);
+            DetailSelesaiTugas dst = new DetailSelesaiTugas(tugas);
             
-            desc.hideElements();
+            dst.hideElements();
             
-            desc.setVisible(true);
+            dst.setVisible(true);
             
             this.setVisible(false);
         }
