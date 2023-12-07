@@ -287,7 +287,7 @@
         </Component>
         <Component class="com.toedter.calendar.JDateChooser" name="txtTenggat">
           <Properties>
-            <Property name="dateFormatString" type="java.lang.String" value=" yyyy-MM-dd h:mm:ss"/>
+            <Property name="dateFormatString" type="java.lang.String" value=" yyyy-MM-dd HH:mm:ss"/>
           </Properties>
         </Component>
       </SubComponents>

@@ -13,16 +13,13 @@ import java.awt.Toolkit;
  */
 public class Mulai extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Mulai
-     */
     public Mulai() {
         initComponents();
-        Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
         
-        //membuat titik x dan y untuk lokasi window
-        int x = layar.width /2 - this.getSize().width / 2;
-        int y = layar.height /2 - this.getSize().height / 2;
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        
+        int x = screen.width /2 - this.getSize().width / 2;
+        int y = screen.height /2 - this.getSize().height / 2;
         this.setLocation(x, y);
     }
 

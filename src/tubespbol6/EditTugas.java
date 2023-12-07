@@ -33,19 +33,23 @@ public class EditTugas extends javax.swing.JFrame {
     public EditTugas() {
         initComponents();
         
-        Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         
-        //membuat titik x dan y untuk lokasi window
-        int x = layar.width /2 - this.getSize().width / 2;
-        int y = layar.height /2 - this.getSize().height / 2;
+        int x = screen.width /2 - this.getSize().width / 2;
+        int y = screen.height /2 - this.getSize().height / 2;
         this.setLocation(x, y);
     }
     
     public EditTugas(String namaTugas) {
-    this.namaTugas = namaTugas;
-    initComponents();
-    tampilData();
-
+        this.namaTugas = namaTugas;
+        initComponents();
+        tampilData();
+    
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        
+        int x = screen.width /2 - this.getSize().width / 2;
+        int y = screen.height /2 - this.getSize().height / 2;
+        this.setLocation(x, y);
     }
 
     private void tampilData(){
@@ -202,7 +206,7 @@ public class EditTugas extends javax.swing.JFrame {
         lblNamaTugas2.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         lblNamaTugas2.setText("Tenggat");
 
-        txtTenggat.setDateFormatString(" yyyy-MM-dd h:mm:ss");
+        txtTenggat.setDateFormatString(" yyyy-MM-dd HH:mm:ss");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -283,7 +287,7 @@ public class EditTugas extends javax.swing.JFrame {
             // aksi simpan data
             if (btnSimpan.getText() == "Simpan"){
                     
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd h:mm:ss"); // Sesuaikan dengan format tanggal di database
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // Sesuaikan dengan format tanggal di database
                 String formattedDate = sdf.format(txtTenggat.getDate());
                 
                 String sql = "UPDATE penjadwalan SET nama_tugas = '" + txtTugas.getText() + "', deskripsi = '" + txtDeskripsi.getText() + "', due_date = '" + formattedDate + "' WHERE nama_tugas = '" + namaTugas + "'";

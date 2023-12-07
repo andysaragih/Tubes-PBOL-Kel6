@@ -44,16 +44,11 @@ public class DeskripsiTugas extends javax.swing.JFrame {
         tampilData();
         tampilNotif();
 
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
         
-        Dimension layar = Toolkit.getDefaultToolkit().getScreenSize();
-        
-        //membuat titik x dan y untuk lokasi window
-        int x = layar.width /2 - this.getSize().width / 2;
-        int y = layar.height /2 - this.getSize().height / 2;
+        int x = screen.width /2 - this.getSize().width / 2;
+        int y = screen.height /2 - this.getSize().height / 2;
         this.setLocation(x, y);
-        
-        
-//        labelTugas.setText(namaTugas);
     }
     
     private void tampilData(){
